@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中传数据系统登录</title>
+
+    <link rel="stylesheet" href="{{ url_for('user.static',filename='css/login.css') }}">
+ <link rel="stylesheet" href="{{ url_for('user.static',filename='css/demo.css') }}">
+
+
+<script type="text/javascript" src="{{ url_for('user.static', filename='js/jquery1.42.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('user.static', filename='js/jquery.SuperSlide.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('user.static', filename='js/Validform_v5.3.2_min.js') }}"></script>
+
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="header">
+  <h1 class="headerLogo">中传数据系统<a title="中传数据系统" target="_blank" href="#"></a></h1>
+	
+</div>
+
+<div class="banner">
+
+<div class="login-aside">
+  <div id="o-box-up"></div>
+  <div id="o-box-down"  style="table-layout:fixed;">
+   <div class="error-box"></div>
+   
+   <form id="registerform" method="POST">
+   <div class="fm-item">
+	   <label for="logonId" class="form-label">中传数据系统登陆：</label>
+	   <input type="text" value="" maxlength="100" name = "accountNumber" id="accountNumber" class="i-text" ajaxurl="demo/valid.jsp"  datatype="s6-18" errormsg="用户名至少6个字符,最多18个字符！"  >
+       <div class="ui-form-explain"></div>
+  </div>
+  
+  <div class="fm-item">
+	   <label for="logonId" class="form-label">登陆密码：</label>
+	   <input type="password" value="" maxlength="100" name = "password" id="password" class="i-text" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！">
+       <div class="ui-form-explain"></div>
+  </div>
+  
+  
+  
+  <div class="fm-item">
+	   <label for="logonId" class="form-label"></label>
+	   <input type="submit" value="" tabindex="4" id="btn" class="btn-login">
+       <div class="ui-form-explain"></div>
+  </div>
+  
+  </form>
+  
+  </div>
+
+</div>
+
+	<div class="bd">
+		<ul>
+			<li ><img src="{{ url_for('user.static',filename='images/index.jpg') }} " height = 1000px width = 1600px /></li>
+
+		</ul>
+	</div>
+
+	<div class="hd"><ul></ul></div>
+</div>
+ <script type="text/javascript">
+        $(function () {
+            $('#btn').click(function () {
+                //ajax提交
+                post_data = $('#registerform').serialize();
+                $.ajax({
+                    url:"{{ url_for('user.login') }}",
+                    type: 'POST',
+                    data: post_data,
+
+
+
+                });
+            });
+        });
+    </script>
+
+
+
+
+
+</body>
+</html>

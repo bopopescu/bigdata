@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>数据呈现</title>
+
+
+
+	<link rel="stylesheet" href="{{ url_for('user.static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('user.static',filename='css/bootstrap-theme.min.css') }}">
+   <link rel="stylesheet" href="{{ url_for('user.static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('user.static',filename='css/animate.css') }}">
+
+     <link rel="stylesheet" href="{{ url_for('user.static',filename='css/animate-custom.css') }}">
+     <link rel="stylesheet" href="{{ url_for('user.static',filename='css/style.less') }}">
+     <link rel="stylesheet" href="{{ url_for('user.static',filename='css/font-awesome.min.css') }}">
+
+
+     <script type="text/javascript" src="{{ url_for('user.static', filename='js/echarts.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('user.static', filename='js/dataTool.js') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('user.static', filename='js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('user.static', filename='js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('user.static', filename='js/jquery.fractionslider.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('user.static', filename='js/main.js') }}"></script>
+
+
+    <script type="text/javascript" src="{{ url_for('user.static', filename='js/animation.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('user.static', filename='js/less.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('user.static', filename='js/isotop.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('user.static', filename='js/jquery.colorbox.js') }}"></script>
+
+
+
+
+    
+
+    
+
+</head>
+
+<body>
+
+	
+    
+    <div class="header">
+        
+        	<div class="header-top">
+            
+            	<div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+                        </div>
+                    </div>
+                </div><!-- /container -->
+        
+           </div><!-- /header-top -->
+           
+           
+           <div class="container">
+           
+           <div class="row">
+           		<div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                	<a href="#" class="logo"><img src="img/main_logo.png" class="img-responsive" alt="" /></a>
+                </div>
+                <div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+                	
+                    <nav class="navbar navbar-default" role="navigation">
+                      <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                        </div>
+                    
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                        </div><!-- /.navbar-collapse -->
+                      </div><!-- /.container-fluid -->
+                    </nav>
+                    
+                </div>
+           </div>
+           
+           </div><!-- .container -->
+    
+    </div><!-- /header -->
+    
+    <div class="page-title">
+    	
+        <div class="container">
+        	<h1>学生信息数据</h1>
+        </div>
+        
+    </div>
+
+                         <div class="row">
+                         <div class="col-md-6">
+                             <div class="card">
+
+
+                        <div class="card-body">
+
+
+                                   <div id="main" style="width: 500px;height:400px;"></div>
+                                    <script type="text/javascript">
+                                         var ownChart = echarts.init(document.getElementById('main'));
+
+
+                                            var app= {
+                                                         name:[],
+                                                         value:[]
+                                                         };
+                                              $(document).ready(function () {
+                                                          getDataa()
+
+
+                                                            });
+                                              function getDataa() {
+                                                          $.ajax({
+                                                                 url:"{{ url_for('user.sex') }}",
+                                                                 data:{},
+                                                                 type:'POST',
+                                                                 async:false,
+                                                                 dataType:'json',
+
+                                                                  success:function(qdata) {
+
+
+                                                                  app.name = qdata.name;
+                                                                  app.value = qdata.value;
+                                                                  ownChart.clear();
+                                                                  ownChart.setOption({
+                                                                  backgroundColor: '#2c343c',
+                                                                   title: {
+        text: '男女生数量',
+        left: 'center',
+        top: 20,
+        textStyle: {
+            color: '#aaa'
+        }
+    },
+                tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+
+
+                legend: {
+                    orient : 'vertical',
+                    x : 'left',
+                    data:app.name
+                },
+
+                series : [
+                    {
+
+                         labelLine: {
+                normal: {
+                    lineStyle: {
+                        color: 'rgba(255, 255, 255, 0.3)'
+                    },
+                    smooth: 0.2,
+                    length: 10,
+                    length2: 20
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#c23531',
+                    shadowBlur: 200,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            },
+                        roseType: 'radius',
+                        label: {
+                normal: {
+                    textStyle: {
+                        color: 'rgba(255, 255, 255, 0.3)'
+                    }
+                }
+            },
+
+                        name:'点击量',
+                        type:'pie',
+                        radius : '55%',//饼图的半径大小
+                        center: ['50%', '60%'],//饼图的位置
+                        data: (function(){
+                    var rs = [];
+                    for(var res in app.name){
+                        rs.push({
+                            name :app.name[res],
+                            value:app.value[res]
+                        });
+                    }
+                    return rs;
+                })()
+
+                    }
+                ]
+
+
+
+
+
+                                        })
+                                                                                    },
+                                                                         error:function (msg) { console.log(msg);
+
+                                                                         alert('系统发生错误bbbbbbbbbbbbb'); } })
+                                                                         };
+
+
+
+
+                                    </script>
+                      </div>
+                             </div>
+                         </div>
+
+     <div class="col-md-6">
+         <div class="card">
+
+
+                        <div class="card-body">
+          <div id="qwe" style="width: 400px;height:400px;"></div>
+                            <script type="text/javascript">
+                                 var myChart = echarts.init(document.getElementById('qwe'));
+
+                                            var apps = {
+                                                         names:[],
+                                                         values:[]
+                                                         };
+                                              $(document).ready(function () {
+                                                          getData()
+
+
+                                                            });
+                                              function getData() {
+                                                          $.ajax({
+                                                                 url:"{{ url_for('user.nation') }}",
+                                                                 data:{},
+                                                                 type:'POST',
+                                                                 async:false,
+                                                                 dataType:'json',
+
+                                                                  success:function(sdata) {
+
+
+                                                                  apps.names = sdata.nameq;
+                                                                  apps.values = sdata.valueq;
+                                                                  myChart.clear();
+                                                                  myChart.setOption({
+                                                                          title: {
+                                                                                 text: '民族人数分布'
+                                                                      },
+                                                                       tooltip: {},
+                                                                       legend: {
+                                                                              data:['人数']
+                                                                           },
+                                                                        xAxis: {
+                                                                             data: apps.names
+                                                                         },
+                                                                         yAxis: {
+
+                                                                         },
+
+                                                                         series: [{ name: '民族分布',
+                                                                                    type: 'bar',
+                                                                                    data: apps.values,
+                                                                                     areaStyle:{}}]
+                                                                                    })
+
+
+                                                                                    },
+                                                                         error:function (msg) { console.log(msg);
+
+                                                                         alert('系统发生错误bbbbbbbbbbbbb'); } })
+                                                                         };
+
+
+
+
+
+
+                            </script>
+
+
+     </div>
+         </div>
+     </div>
+
+</div>
+
+
+
+<div class="row">
+                         <div class="col-md-6">
+                             <div class="card">
+
+
+                        <div class="card-body">
+
+
+                                   <div id="rty" style="width: 500px;height:400px;"></div>
+                                    <script type="text/javascript">
+                                 var qChart = echarts.init(document.getElementById('rty'));
+
+                                            var apps = {
+                                                         names:[],
+                                                         values:[]
+                                                         };
+                                              $(document).ready(function () {
+                                                          getDataq()
+
+
+                                                            });
+                                              function getDataq() {
+                                                          $.ajax({
+                                                                 url:"{{ url_for('user.birth') }}",
+                                                                 data:{},
+                                                                 type:'POST',
+                                                                 async:false,
+                                                                 dataType:'json',
+
+                                                                  success:function(sdata) {
+
+
+                                                                  apps.names = sdata.namew;
+                                                                  apps.values = sdata.valuew;
+
+                                                                 qChart.setOption({
+                                                                          title: {
+                                                                                 text: '出生年人数分布'
+                                                                      },
+                                                                       tooltip: {},
+                                                                       legend: {
+                                                                              data:['人数']
+                                                                           },
+                                                                        xAxis: {
+                                                                             data: apps.names
+                                                                         },
+                                                                         yAxis: {
+
+                                                                         },
+
+                                                                         series: [{ name: '出生年分布',
+                                                                                    type: 'bar',
+                                                                                    data: apps.values,
+                                                                                     areaStyle:{}}]
+                                                                                    })
+
+
+                                                                                    },
+                                                                         error:function (msg) { console.log(msg);
+
+                                                                         alert('系统发生错误bbbbbbbbbbbbb'); } })
+                                                                         };
+
+
+
+
+
+
+                            </script>
+                      </div>
+                             </div>
+                         </div>
+
+     <div class="col-md-6">
+         <div class="card">
+
+
+                        <div class="card-body">
+          <div id="uiop" style="width: 400px;height:400px;"></div>
+                            <script type="text/javascript">
+                            var wChart = echarts.init(document.getElementById('uiop'));
+                                wChart.showLoading();
+$.get('static/js/les-miserables.gexf', function (xml) {
+    wChart.hideLoading();
+
+    var graph = echarts.dataTool.gexf.parse(xml);
+    var categories = [];
+    for (var i = 0; i < 9; i++) {
+        categories[i] = {
+            name: '类目' + i
+        };
+    }
+    graph.nodes.forEach(function (node) {
+        node.itemStyle = null;
+        node.value = node.symbolSize;
+        node.symbolSize /= 1.5;
+        node.label = {
+            normal: {
+                show: node.symbolSize > 30
+            }
+        };
+        node.category = node.attributes.modularity_class;
+    });
+    option = {
+        title: {
+            text: 'Les Miserables',
+            subtext: 'Default layout',
+            top: 'bottom',
+            left: 'right'
+        },
+        tooltip: {},
+        legend: [{
+            // selectedMode: 'single',
+            data: categories.map(function (a) {
+                return a.name;
+            })
+        }],
+        animationDuration: 1500,
+        animationEasingUpdate: 'quinticInOut',
+        series : [
+            {
+                name: 'Les Miserables',
+                type: 'graph',
+                layout: 'none',
+                data: graph.nodes,
+                links: graph.links,
+                categories: categories,
+                roam: true,
+                focusNodeAdjacency: true,
+                itemStyle: {
+                    normal: {
+                        borderColor: '#fff',
+                        borderWidth: 1,
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.3)'
+                    }
+                },
+                label: {
+                    position: 'right',
+                    formatter: '{b}'
+                },
+                lineStyle: {
+                    color: 'source',
+                    curveness: 0.3
+                },
+                emphasis: {
+                    lineStyle: {
+                        width: 10
+                    }
+                }
+            }
+        ]
+    };
+
+    wChart.setOption(option);
+}, 'xml');
+
+
+
+
+
+
+                            </script>
+
+
+     </div>
+         </div>
+     </div>
+
+</div>
+
+
+
+
+                                        
+
+    
+    
+
+    
+
+    
+    
+
+</body>
+</html>
